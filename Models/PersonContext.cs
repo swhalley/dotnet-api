@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace dotnet_api_oauth.Models
+namespace swhalley.Models
 {
     public class PersonContext : DbContext
     {
