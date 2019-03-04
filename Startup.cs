@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace dotnet_api_oauth
 {
@@ -26,12 +27,19 @@ namespace dotnet_api_oauth
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PersonContext>( opt => opt.UseInMemoryDatabase("People"));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<PersonContext>( ctx => ctx.UseMySQL( Configuration.GetConnectionString("ContactDb")));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions( options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            using( var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()){
+                var context = scope.ServiceProvider.GetService<PersonContext>();
+                context.Database.EnsureCreated();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -44,6 +52,7 @@ namespace dotnet_api_oauth
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
         }
     }
 }

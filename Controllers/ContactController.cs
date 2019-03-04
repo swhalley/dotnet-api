@@ -28,7 +28,7 @@ namespace swhalley.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson( int id ){
             return await _context.People
-                    .Where(p => p.id == id )
+                    .Where(p => p.ID == id )
                     .Include(p => p.Address)
                     .FirstOrDefaultAsync();
         }
