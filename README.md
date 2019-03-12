@@ -30,3 +30,8 @@ The below command runs the dotnet application and exposes the endpoint
 * docker (optional) - https://www.docker.com/get-started
 
 
+# Useful Links
+* Example Application - Tutorial https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-2.2&tabs=visual-studio-code
+* Dotnet core commands - https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new?tabs=netcore21
+* NuGet Repository - https://www.nuget.org/packages/
+* 
