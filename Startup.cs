@@ -28,6 +28,9 @@ namespace dotnet_api_oauth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PersonContext>( ctx => ctx.UseMySQL( Configuration.GetConnectionString("ContactDb")));
+
+            //EF Core by default has a circular loop structure. To prevent the JSON parser from throwing an error
+            //when a response is serializing, the json options are added to ignore the circular reference when it is found.
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions( options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
@@ -35,6 +38,8 @@ namespace dotnet_api_oauth
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //This block of code is for applications with no database. EF Core allows you to auto create
+            //the database if one doesn't exist. For development purposes this may be useful.
             using( var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope()){
                 var context = scope.ServiceProvider.GetService<PersonContext>();
                 context.Database.EnsureCreated();
