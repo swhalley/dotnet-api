@@ -27,6 +27,8 @@ namespace dotnet_api_oauth
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //Autowired line which allows injection of the service into the controller. The service is setup to initialize
+            //With a MySQL Database. But can be changed to support other database types.
             services.AddDbContext<PersonContext>( ctx => ctx.UseMySQL( Configuration.GetConnectionString("ContactDb")));
 
             //EF Core by default has a circular loop structure. To prevent the JSON parser from throwing an error

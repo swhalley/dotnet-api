@@ -19,12 +19,20 @@ namespace swhalley.Controllers
             _context = context;
         }
 
+        /**
+        * Endpoint : api/contact/
+        * Retrieves a list of all people     
+        */
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Person>>> GetPeople()
         {
             return await _context.People.ToListAsync();
         }
 
+        /**
+        * Endpoint : api/contact/{id}
+        * Retrieves a specific person. Will also contain their address    
+        */
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson( int id ){
             return await _context.People
@@ -33,6 +41,10 @@ namespace swhalley.Controllers
                     .FirstOrDefaultAsync();
         }
 
+        /**
+         * Endpoint : api/contact/birthdate/{YYYY-MM-DD}
+         * Provides the ability to find all people with the same birthdate
+         */
         [HttpGet("birthdate/{birthdate}")]
         public async Task<ActionResult<IEnumerable<Person>>> GetByBirthdate(DateTime birthdate)
         {
@@ -41,6 +53,11 @@ namespace swhalley.Controllers
                     .ToListAsync();
         }
 
+        /**
+         * Endpoint : api/contact/
+         * Verb : POST
+         * Ability to Add a new Person. 
+          */
         [HttpPost]
         public async Task<ActionResult<Person>> AddPerson([FromBody] Person person)
         {
