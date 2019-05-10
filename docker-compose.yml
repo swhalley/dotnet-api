@@ -8,8 +8,8 @@ services:
         - 3306:3306
       environment:
         POSTGRES_PASSWORD: supersecret
-        POSTGRES_USER: application
-
+        POSTGRES_USER: superuser
+        POSTGRES_DB: appData
     dotnet:
       build: .
       depends_on: 
