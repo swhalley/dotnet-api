@@ -2,12 +2,26 @@ version: '3'
 
 services:
     db:
-      image: mysql
+      image: postgres
       restart: always
       ports: 
         - 3306:3306
       environment:
-        MYSQL_ROOT_PASSWORD: supersecret
-        MYSQL_DATABASE: test
-        MYSQL_USER: user
-        MYSQL_PASSWORD: secret
+        POSTGRES_PASSWORD: supersecret
+        POSTGRES_USER: application
+
+    dotnet:
+      build: .
+      depends_on: 
+        - db
+
+    reverseproxy:
+      image: nginx
+      depends_on: 
+        - dotnet
+      volumes: 
+        - ./Resources/ServerConfig:/etc/nginx/conf.d/
+      ports:
+        - 7654:80
+    
+
