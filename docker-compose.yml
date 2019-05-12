@@ -13,17 +13,15 @@ services:
 
     dotnetbackend:
       build: .
-      ports: 
-        - 5000:80
       depends_on: 
         - postgresdb
       restart: always #workaround until there is a better way to wait for postgres
 
-    # reverseproxy:
-    #   image: nginx
-    #   depends_on: 
-    #     - dotnetbackend
-    #   volumes: 
-    #     - ./Resources/ServerConfig:/etc/nginx/conf.d/
-    #   ports:
-    #     - 7654:80
+    reverseproxy:
+      image: nginx
+      volumes: 
+        - ./Resources/ServerConfig:/etc/nginx/conf.d/
+      ports:
+        - 80:80
+      depends_on: 
+        - dotnetbackend
