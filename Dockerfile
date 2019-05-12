@@ -17,6 +17,4 @@ COPY --from=build /app/staging/out ./
 
 RUN pwd
 
-EXPOSE 5000
-EXPOSE 5001
 ENTRYPOINT ["dotnet", "dotnet-api-oauth.dll"]
