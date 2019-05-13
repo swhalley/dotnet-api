@@ -1,12 +1,15 @@
 # Overview 
 This application demonstrates using dotnet core and EF core to build an application.
 dotnet core is used to create rest endpoints. EF core is used to communicate with the database.
+In this example, Postgres is used as the database of choice.
+
+In front of all this, is an nginx server acting as a reverse proxy. 
+
+Docker is used to help simulate the setup. 
 
 # Setup
 
-## Run a database
-The mySQL database below is using Docker to run. If you have an existing MySQL database you can skip this step.
-
+## Configure a database
 The connection pool information can be found in appsettings.json and/or appsettings.Development.json
 ```
 "ConnectionStrings": {
@@ -14,9 +17,16 @@ The connection pool information can be found in appsettings.json and/or appsetti
   },
 ```
 
-To run the development server
+Modify the connection string if you need to. Currently it is using a docker container to bring together the components, so there should be no change required.
+
+## To run the development server
 
 `docker-compose up`
+
+# Additional 
+If you want to run the application locally, without Docker, you can do the following.
+
+Note - you will need to modify the DB connection string to point to a proper database
 
 ## Restore Dependencies
 There are dependencies in the application that need to be pulled from NuGet
