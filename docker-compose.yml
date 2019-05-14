@@ -13,6 +13,7 @@ services:
 
     dotnetbackend:
       build: .
+      image: dotnetbackend:latest
       depends_on: 
         - postgresdb
       restart: always #workaround until there is a better way to wait for postgres

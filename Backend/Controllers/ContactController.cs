@@ -6,6 +6,7 @@ using swhalley.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Logging;
 
 namespace swhalley.Controllers
 {
@@ -14,9 +15,11 @@ namespace swhalley.Controllers
     public class ContactController : ControllerBase
     {
         private readonly PersonContext _context;
+        private readonly ILogger _logger;
 
-        public ContactController( PersonContext context ){
+        public ContactController( ILogger<ContactController> logger, PersonContext context ){
             _context = context;
+            _logger = logger;
         }
 
         /**
@@ -26,6 +29,7 @@ namespace swhalley.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Person>>> GetPeople()
         {
+            _logger.LogInformation("Getting all the people");
             return await _context.People.ToListAsync();
         }
 
@@ -35,6 +39,7 @@ namespace swhalley.Controllers
         */
         [HttpGet("{id}")]
         public async Task<ActionResult<Person>> GetPerson( int id ){
+            _logger.LogInformation("A request came in looking for " + id);
             return await _context.People
                     .Where(p => p.ID == id )
                     .Include(p => p.Address)
@@ -48,6 +53,7 @@ namespace swhalley.Controllers
         [HttpGet("birthdate/{birthdate}")]
         public async Task<ActionResult<IEnumerable<Person>>> GetByBirthdate(DateTime birthdate)
         {
+            _logger.LogWarning("Do we even have a working birthdate function @ " + birthdate);
             return await _context.People
                     .Where( Person => Person.Birthdate == birthdate )
                     .ToListAsync();
@@ -64,6 +70,7 @@ namespace swhalley.Controllers
             _context.People.Add( person );
             await _context.SaveChangesAsync();
 
+            _logger.LogInformation($"Welcome {person.Name}");
             return person;
         }
     }

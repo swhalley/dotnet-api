@@ -7,8 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using NLog.Web;
 
-namespace dotnet_api_oauth
+namespace swhalley
 {
     //Application created from 
     //dotnet new webapi -o appName
@@ -21,11 +22,23 @@ namespace dotnet_api_oauth
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.conf").GetCurrentClassLogger();
+
+            try {
+                logger.Error("Application is starting - Hello Logger");
+                CreateWebHostBuilder(args).Build().Run();
+            } finally {
+                NLog.LogManager.Shutdown();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureLogging( configureLogging => {
+                    configureLogging.ClearProviders();
+                    configureLogging.SetMinimumLevel( LogLevel.Trace );
+                })
+                .UseNLog();
     }
 }

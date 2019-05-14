@@ -1,4 +1,8 @@
+# IDE Files
 .vscode/
+.vs/
+
+# Dotnet Core Files
 bin/
 obj/
 out/

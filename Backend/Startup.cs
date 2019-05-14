@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace dotnet_api_oauth
+namespace swhalley
 {
     public class Startup
     {
@@ -41,6 +41,8 @@ namespace dotnet_api_oauth
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions( options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
+
+            services.AddLogging();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
