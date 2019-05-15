@@ -73,5 +73,20 @@ namespace swhalley.Controllers
             _logger.LogInformation($"Welcome {person.Name}");
             return person;
         }
+
+        [HttpGet("name/{letter}")]
+        public async Task<IEnumerable<Person>> fooBar( char letter ){
+            var people = new List<Person>();
+
+            people.Add( new Person(){ Name = "Sean", Birthdate = new DateTime()});
+            people.Add( new Person(){ Name = "Bob", Birthdate = new DateTime()});
+            people.Add( new Person(){ Name = "Dave", Birthdate = new DateTime()});
+            people.Add( new Person(){ Name = "Sam", Birthdate = new DateTime()});
+            people.Add( new Person(){ Name = "John", Birthdate = new DateTime()});
+
+            return await Task.Run( () => 
+                people.Where( person => person.Name.ToLower().Contains( Char.ToLower( letter ) )).ToList() 
+            );
+        }
     }
 }
