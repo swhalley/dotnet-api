@@ -1,0 +1,15 @@
+mat-list {
+    display: flex;
+}
+
+mat-list > mat-card {
+    margin: 15px;
+}
+
+mat-card { 
+    width: 300px;
+}
+
+mat-card mat-card-header mat-icon {
+    font-size: 40px;
+}
