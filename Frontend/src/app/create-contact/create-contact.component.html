@@ -33,6 +33,7 @@
       <input matInput #postalCodeLength 
       maxlength="6" 
       required 
+      [(ngModel)]="person.address.postalCode"
       [formControl]="postalCode" />
       <mat-hint align="start">example - A0A0A0</mat-hint>
       <mat-hint align="end">{{postalCodeLength.value.length}}/6</mat-hint>

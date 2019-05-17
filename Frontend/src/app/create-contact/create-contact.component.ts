@@ -9,7 +9,7 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./create-contact.component.css']
 })
 export class CreateContactComponent implements OnInit {
-  postalCodeRegEx = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+  postalCodeRegEx = /^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$/;
 
   person = new Person();
   postalCode = new FormControl( this.person.address.postalCode, [Validators.required, Validators.pattern( this.postalCodeRegEx )]);
