@@ -1,3 +1,43 @@
-<p>
-  create-contact works!
-</p>
+<section>
+  <form>
+    <mat-form-field>
+      <mat-label>Full Name</mat-label>
+      <input matInput required [(ngModel)]="person.name" name="name" (change)="isPersonCool($event)" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Birthdate</mat-label>
+      <input matInput type='date' required 
+      [ngModel]="person.birthdate | date: 'yyyy-MM-dd' " 
+      (ngModelChange)="person.birthdate = $event"
+      name="birthdate" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Address</mat-label>
+      <input matInput required [(ngModel)]="person.address.addressOne" name="address" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <input matInput required [(ngModel)]="person.address.city" name="city" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Province</mat-label>
+      <input matInput required [(ngModel)]="person.address.province" name="province" />
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Postal Code</mat-label>
+      <input matInput #postalCodeLength 
+      maxlength="6" 
+      required 
+      [formControl]="postalCode" />
+      <mat-hint align="start">example - A0A0A0</mat-hint>
+      <mat-hint align="end">{{postalCodeLength.value.length}}/6</mat-hint>
+    </mat-form-field>
+   </form>
+
+   <mat-icon *ngIf="isCool">android</mat-icon>
+  </section>
