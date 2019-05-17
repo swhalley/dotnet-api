@@ -31,8 +31,7 @@
     <mat-form-field>
       <mat-label>Postal Code</mat-label>
       <input matInput #postalCodeLength 
-      maxlength="6" 
-      required 
+      maxlength="6"
       [(ngModel)]="person.address.postalCode"
       [formControl]="postalCode" />
       <mat-hint align="start">example - A0A0A0</mat-hint>
